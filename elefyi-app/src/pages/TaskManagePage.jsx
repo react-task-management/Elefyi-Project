@@ -41,7 +41,7 @@ function TaskDetailsPage() {
         </h2>
 
         {/* ✅ Toggle Add Task Form */}
-        <button
+        <button id="add-new-task-btn"
           onClick={() => setShowAddTask(!showAddTask)}
           className="bg-blue-500 text-white px-4 py-2 rounded mb-3 cursor-pointer"
         >

@@ -199,4 +199,17 @@
     flex-grow: 1;
   }
 
+/**************tasks******************/
+#task-btns button {
+  background-color: white;
+  color: black;
+}
 
+#add-new-task-btn {
+  color:rgb(255, 255, 255);
+  background-color:  #05b0d6;
+}
+
+#add-new-task-btn:hover {
+  background-color: black;
+}

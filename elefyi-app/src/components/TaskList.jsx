@@ -78,7 +78,7 @@ function TaskList({ tasks, setTasks }) {
 
                 {/* ✅ Display Due Date */}
                 <p className="text-sm font-semibold mt-2">
-                  📅 Due Date:{" "}
+                <i className='bx bx-calendar'></i> Due Date:{" "}
                   <span className="text-blue-600">
                     {task.dueDate || "No due date"}
                   </span>
@@ -105,7 +105,7 @@ function TaskList({ tasks, setTasks }) {
               </div>
 
               {/* ✅ Buttons Section */}
-              <div className="flex flex-wrap justify-between mt-3 gap-2">
+              <div className="flex flex-wrap justify-between mt-3 gap-2" id="task-btns">
                 <button
                   onClick={() => openModal(task, "status")}
                   className={`px-3 py-1 rounded shadow-md transition cursor-pointer ${
@@ -136,14 +136,14 @@ function TaskList({ tasks, setTasks }) {
                   onClick={() => openModal(task, "edit")}
                   className="bg-gray-700 text-white px-3 py-1 rounded shadow-md transition cursor-pointer hover:bg-gray-800"
                 >
-                  ✏ Edit
+                  <i className='bx bxs-edit-alt' ></i> Edit
                 </button>
 
                 <button
                   onClick={() => handleSoftDeleteTask(task.id)}
                   className="bg-red-500 text-white px-3 py-1 rounded shadow-md transition cursor-pointer hover:bg-red-600"
                 >
-                  🗑 Delete
+                  <i className='bx bxs-trash'></i> Delete
                 </button>
               </div>
             </div>
