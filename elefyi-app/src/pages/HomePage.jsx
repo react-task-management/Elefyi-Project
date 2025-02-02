@@ -1,11 +1,14 @@
  
 import "../styles/MainStyle.css"; // Import your custom CSS file
+import HomeHero from "../components/HomeHero";
+import HomeChart from "../components/HomeChart";
+import HomeTasks from "../components/homeTasks";
 
 function HomePage () {
     return (<>
         <div className="pageContainer">
-            <h1>Welcome to Elefyi!</h1>
-            <p>Manage tasks efficiently and stay productive.</p>
+            <HomeHero/>
+            <HomeTasks/>
         </div>
       </> );
 }

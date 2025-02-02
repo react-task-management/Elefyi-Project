@@ -14,6 +14,7 @@ import SignUpPage from "./pages/SignUpPage";
 import TaskDetailsPage from "./pages/TaskDetailsPage";
 import TaskManagePage from "./pages/TaskManagePage";
 import UserProfilePage from "./pages/UserProfilePage";
+import TasksDetails from "./pages/TaskDetailsPage";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/user-profile" element={<UserProfilePage />} />
                 <Route path="/signup" element={<Navigate to="/home" />} />
                 <Route path="/login" element={<Navigate to="/home" />} />
+                <Route path="/task/:taskId" element={<TasksDetails />} />
               </Routes>
             </div>
           </div>

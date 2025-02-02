@@ -213,3 +213,8 @@
 #add-new-task-btn:hover {
   background-color: black;
 }
+
+#change-task {
+  color:rgb(255, 255, 255);
+  background-color:  #05b0d6;
+}

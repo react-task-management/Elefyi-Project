@@ -1,7 +1,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
 import { getAuth } from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js';
-import { getDatabase, ref, push, onValue, update  } from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js';
+import {  getDatabase,
+  ref,
+  push,
+  onValue,
+  update,
+  get} from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,7 +23,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const database = getDatabase(app);
 
@@ -68,11 +71,32 @@ const deleteTask = (taskId) => {
   update(ref(database, `tasks/${taskId}`), { isDeleted: "true" });
 };
 
+////////////////////////////////////////////////////////
+
+
+// ✅ NEW FUNCTION: Get User Role from Firebase
+const getUserRole = async (userEmail) => {
+  const dbRef = ref(database, "users");
+  const snapshot = await get(dbRef);
+
+  if (snapshot.exists()) {
+    const usersData = snapshot.val();
+    const foundUser = Object.values(usersData).find(
+      (user) => user.email === userEmail
+    );
+    return foundUser ? foundUser.role : null;
+  }
+  return null;
+};
+
+
+
 
 export { auth, database,addTask,
   listenToTasks,
   listenToUsers,
+  getUserRole, // ✅ Export new function
   updateTaskStatus,
   updateTaskPriority,
   updateTask,
-  deleteTask, };
+  deleteTask};

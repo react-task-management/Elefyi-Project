@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types"; // ✅ Import PropTypes
 import { addTask, listenToUsers } from "../firebase";
 
-function AddTaskForm() {
+function AddTaskForm({ userRole }) {
+  // ✅ Accept logged-in user as prop
   const [taskData, setTaskData] = useState({
     title: "",
     description: "",
@@ -12,6 +14,7 @@ function AddTaskForm() {
   });
 
   const [users, setUsers] = useState([]);
+  const isManager = userRole === "manager"; // ✅ Check if user is a manager
 
   // ✅ Fetch Users from Firebase
   useEffect(() => {
@@ -102,17 +105,25 @@ function AddTaskForm() {
         <option value="Done">Done</option>
       </select>
 
-      {/* ✅ User Multi-Select */}
+      {/* ✅ Assign Users - Only for Managers */}
       <div className="mb-2">
-        <h3 className="text-sm font-semibold mb-1">Assign Users:</h3>
+        <h3 className="text-sm font-semibold mb-1">
+          Assign Users: {isManager ? "" : "(Only managers can assign users)"}
+        </h3>
         <div className="grid grid-cols-2 gap-2">
           {users.map((user) => (
-            <label key={user.id} className="flex items-center space-x-2">
+            <label
+              key={user.id}
+              className={`flex items-center space-x-2 ${
+                isManager ? "" : "hidden"
+              }`}
+            >
               <input
                 type="checkbox"
                 value={user.id}
                 checked={taskData.assignedUsers.includes(user.id)}
                 onChange={() => handleUserSelection(user.id)}
+                disabled={!isManager} // ❌ Disable selection for non-managers
               />
               <img
                 src={user.profileImage || "/default-avatar.png"}
@@ -126,7 +137,6 @@ function AddTaskForm() {
       </div>
 
       <button
-      id="add-new-task-btn"
         type="submit"
         className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer"
       >
@@ -135,5 +145,12 @@ function AddTaskForm() {
     </form>
   );
 }
+
+// ✅ Fix: Add PropTypes Validation
+AddTaskForm.propTypes = {
+  userRole: PropTypes.shape({
+    role: PropTypes.string, // ✅ Validate that userRole has a role
+  }),
+};
 
 export default AddTaskForm;
