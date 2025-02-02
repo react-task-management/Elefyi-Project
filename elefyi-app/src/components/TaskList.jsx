@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { motion, AnimatePresence } from "framer-motion"; // ✅ Import Framer Motion
+import { FaCheck } from "react-icons/fa";
 import {
   listenToTasks,
   updateTaskStatus,
@@ -31,7 +32,8 @@ function TaskList({ tasks, setTasks }) {
 
   return (
     <motion.div
-      className="p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6"
+    id="tasks-container"
+      className=""
       layout // ✅ Ensures smooth filtering animation
     >
       <AnimatePresence>
@@ -55,14 +57,25 @@ function TaskList({ tasks, setTasks }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }} // 👈 Smooth exit going slightly up
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className={`p-5 rounded-lg shadow-md transition-transform transform hover:scale-105 flex flex-col justify-between ${
-                  task.priority === "High"
-                    ? "border-l-4 border-red-500"
-                    : task.priority === "Medium"
-                    ? "border-l-4 border-yellow-500"
-                    : "border-l-4 border-green-500"
-                }`}
+                id="task-card"
+                className={`p-5 rounded-lg shadow-md transition-transform transform hover:scale-105 flex flex-col justify-between relative
+                  ${
+                    task.status === "Done"
+                      ? "bg-green-100 border-l-4 border-blue-500" // ✅ Green background if "Done"
+                      : task.priority === "High"
+                      ? "border-l-4 border-red-500" 
+                      : task.priority === "Medium"
+                      ? "border-l-4 border-yellow-500"
+                      : "border-l-4 border-blue-500"
+                  }`}
               >
+                {/* ✅ Checkmark Icon if Done */}
+                {task.status === "Done" && (
+                  <div className="absolute top-3 right-3 text-green-600 text-lg">
+                    <FaCheck />
+                  </div>
+                )}
+
                 {/* ✅ Clicking on the title navigates to details */}
                 <h3
                   className="font-bold text-lg cursor-pointer hover:underline"
@@ -75,8 +88,8 @@ function TaskList({ tasks, setTasks }) {
 
                 {/* ✅ Display Due Date */}
                 <p className="text-sm font-semibold mt-2">
-                  📅 Due Date:{" "}
-                  <span className="text-blue-600">
+                <i className='bx bx-calendar'></i> Due Date:{" "}
+                  <span className="text-[#000000]">
                     {task.dueDate || "No due date"}
                   </span>
                 </p>
@@ -101,7 +114,7 @@ function TaskList({ tasks, setTasks }) {
                 </div>
 
                 {/* ✅ Buttons Section */}
-                <div className="flex flex-wrap justify-between mt-3 gap-2">
+                <div className="flex flex-wrap mt-3 gap-2" id="task-btns">
                   <button
                     onClick={() => openModal(task, "status")}
                     className={`px-3 py-1 rounded shadow-md transition cursor-pointer ${
@@ -113,6 +126,7 @@ function TaskList({ tasks, setTasks }) {
                     }`}
                   >
                     {task.status}
+                    <i className='bx bx-chevron-right bx-xs'></i>
                   </button>
 
                   <button
@@ -125,21 +139,21 @@ function TaskList({ tasks, setTasks }) {
                         : "bg-red-500 text-white hover:bg-red-600"
                     }`}
                   >
-                    {task.priority}
+                    <i className='bx bx-chevron-right bx-xs'></i> {task.priority}
                   </button>
 
                   <button
                     onClick={() => openModal(task, "edit")}
-                    className="bg-gray-700 text-white px-3 py-1 rounded shadow-md transition cursor-pointer hover:bg-gray-800"
+                    className=""
                   >
-                    ✏ Edit
+                    <i className='bx bxs-edit-alt bx-xs'></i>
                   </button>
 
                   <button
                     onClick={() => deleteTask(task.id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded shadow-md transition cursor-pointer hover:bg-red-600"
+                    id="delete-btn"
                   >
-                    🗑 Delete
+                    <i className='bx bxs-trash bx-xs'></i>
                   </button>
                 </div>
               </motion.div>
@@ -182,7 +196,7 @@ function TaskList({ tasks, setTasks }) {
                   }
                   placeholder="Task Description"
                 />
-                <button
+                <button id="blue-btn"
                   onClick={() => updateTask(selectedTask.id, selectedTask)}
                   className="mt-3 bg-blue-500 text-white px-4 py-1 rounded w-full cursor-pointer hover:bg-blue-600"
                 >
@@ -191,33 +205,43 @@ function TaskList({ tasks, setTasks }) {
               </>
             ) : (
               <select
-                onChange={(e) => {
-                  if (modalType === "status") {
-                    updateTaskStatus(selectedTask.id, e.target.value);
-                    setSelectedTask((prev) => ({
-                      ...prev,
-                      status: e.target.value,
-                    }));
-                  } else {
-                    updateTaskPriority(selectedTask.id, e.target.value);
-                    setSelectedTask((prev) => ({
-                      ...prev,
-                      priority: e.target.value,
-                    }));
-                  }
-                  setShowModal(false);
-                }}
-                className="w-full p-2 border rounded cursor-pointer"
-              >
-                <option value="" disabled selected>
-                  Choose {modalType}...
-                </option>
-                <option value="To Do">To Do</option>
-                <option value="Doing">Doing</option>
-                <option value="Done">Done</option>
-              </select>
+              onChange={(e) => {
+                if (modalType === "status") {
+                  updateTaskStatus(selectedTask.id, e.target.value);
+                  setSelectedTask((prev) => ({
+                    ...prev,
+                    status: e.target.value,
+                  }));
+                } else if (modalType === "priority") {
+                  updateTaskPriority(selectedTask.id, e.target.value);
+                  setSelectedTask((prev) => ({
+                    ...prev,
+                    priority: e.target.value,
+                  }));
+                }
+                setShowModal(false);
+              }}
+              className="w-full p-2 border rounded cursor-pointer"
+            >
+              <option value="" disabled selected>
+                Choose {modalType}...
+              </option>
+              {modalType === "status" ? (
+                <>
+                  <option value="To Do">To Do</option>
+                  <option value="Doing">Doing</option>
+                  <option value="Done">Done</option>
+                </>
+              ) : (
+                <>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                </>
+              )}
+            </select>
             )}
-            <button
+            <button id="blue-btn"
               onClick={() => setShowModal(false)}
               className="mt-3 bg-red-500 text-white px-4 py-1 rounded w-full cursor-pointer hover:bg-red-600"
             >

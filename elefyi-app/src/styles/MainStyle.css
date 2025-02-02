@@ -164,6 +164,13 @@
     color: #333;
   }
   
+
+  .pageContainer2 {
+    margin: 20px;
+    border-radius: 8px;
+    padding: 24px;
+    background-color:#f5f7fb ;
+  }
   /* Homepage Styles */
   .pageContainer {
     margin: 20px;
@@ -195,26 +202,101 @@
     font-family: 'Poppins', sans-serif;
     display: flex;
     flex-direction: column;
-    background-color: #f9f9f9;
+    background-color: #f5f7fb;
     flex-grow: 1;
   }
 
+  #home-hero{
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+  }
+
 /**************tasks******************/
+#tasks-container {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  width: 1000px;
+  flex-wrap:wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+#blue-btn {
+  background-color: #05b0d6;
+  color: white;
+}
+
+#task-card {
+  position: relative;
+  background: #ffffff;
+  width: 310px;
+  border-radius: 16px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+#task-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 8px;
+}
+
+#task-card p {
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 12px;
+}
+
+#task-card .icon-container {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  background-color: #05b0d6; /* Customize this color based on icon */
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
 #task-btns button {
   background-color: white;
+  display: flex;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  align-items: center;
   color: black;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-#add-new-task-btn {
-  color:rgb(255, 255, 255);
-  background-color:  #05b0d6;
+#task-btns button:hover {
+  background-color: #000000;
+  color: white;
 }
 
-#add-new-task-btn:hover {
-  background-color: black;
+#delete-btn i {
+  color: #ff4d4f;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-#change-task {
-  color:rgb(255, 255, 255);
-  background-color:  #05b0d6;
+#delete-btn i:hover {
+  transform: scale(1.1);
 }

@@ -148,7 +148,7 @@ function ContactPage() {
           </div>
 
           <div className="mt-10">
-            <button type="submit" disabled={loading} className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500">
+            <button type="submit" disabled={loading} id="blue-btn" className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500">
               {loading ? "Submitting..." : "Let's talk"}
             </button>
           </div>

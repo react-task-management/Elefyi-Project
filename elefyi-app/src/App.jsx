@@ -11,7 +11,6 @@ import ArticlesPage from "./pages/ArticlesPage";
 import ContactPage from "./pages/ContactPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
-import TaskDetailsPage from "./pages/TaskDetailsPage";
 import TaskManagePage from "./pages/TaskManagePage";
 import UserProfilePage from "./pages/UserProfilePage";
 import TasksDetails from "./pages/TaskDetailsPage";
@@ -39,7 +38,6 @@ function App() {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/articles" element={<ArticlesPage />} />
                 <Route path="/contact" element={<ContactPage />} />
-                <Route path="/task-details" element={<TaskDetailsPage />} />
                 <Route path="/task-manage" element={<TaskManagePage />} />
                 <Route path="/user-profile" element={<UserProfilePage />} />
                 <Route path="/signup" element={<Navigate to="/home" />} />

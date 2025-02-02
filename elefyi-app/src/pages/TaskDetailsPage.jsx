@@ -69,7 +69,7 @@ const TaskDetails = () => {
   }
 
   return (
-    <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
+    <div className="fixed inset-0  bg-opacity-10 backdrop-blur-md flex items-center justify-center z-50">
       <div className="max-w-2xl w-full bg-white rounded-lg shadow-md p-6 relative">
         {/* Return Button */}
         <button

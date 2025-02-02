@@ -44,9 +44,9 @@ function TaskManagePage() {
   }, [tasks, statusFilter, priorityFilter]);
   
   return (
-    <div className="pageContainer">
+    <div className="pageContainer2">
 
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mr-[100px]">
       <>
                 <StatusFilter
                   onFilterChange={setStatusFilter}
@@ -56,7 +56,7 @@ function TaskManagePage() {
                   <h2 className="text-lg font-semibold">
                     Showing: {statusFilter} Tasks | {priorityFilter} Priority
                   </h2>
-                  <button
+                  <button id="blue-btn"
                     onClick={() => setShowAddTask(!showAddTask)}
                     className="bg-blue-500 text-white px-4 py-2 rounded mb-3 cursor-pointer"
                   >

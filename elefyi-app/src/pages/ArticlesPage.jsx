@@ -39,6 +39,7 @@ const ArticlesPage = () => {
               <h2 className="text-xl font-semibold text-gray-800">{article.title}</h2>
               <p className="text-gray-600 mt-2">
                 {article.description}
+                <a href={article.link} style={{color:"blue"}} >read more</a>
               </p>
               <p className="text-gray-500 mt-4 text-sm">By {article.author} - {article.read_time}</p>
             </div>

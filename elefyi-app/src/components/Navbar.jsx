@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import { signOut } from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js'; // Import Firebase signOut method
 import { auth, database } from "../firebase"; // Ensure Firebase is imported
 import { ref, get } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
 import "../styles/MainStyle.css";
 import userImg from "../Images/user.png";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [userName, setUserName] = useState("");
@@ -24,6 +25,17 @@ function Navbar() {
 
     fetchUserName();
   }, []);
+
+  const navigate = useNavigate(); // Hook to redirect after logout
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Sign out the user
+      navigate("/signup"); // Redirect to the login page after logout
+    } catch (error) {
+      console.error("Error signing out: ", error.message);
+    }
+  };
 
   return (
     <nav className="navbar">
@@ -58,9 +70,9 @@ function Navbar() {
                     Support
                   </NavLink>
                 </MenuItem>
-                <NavLink to="/login">
+                <NavLink to="/signup">
                   <MenuItem>
-                    <button type="submit" className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
+                    <button  onClick={handleLogout} type="submit" className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
                       Sign out
                     </button>
                   </MenuItem>

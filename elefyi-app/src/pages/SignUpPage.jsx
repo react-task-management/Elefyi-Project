@@ -65,7 +65,7 @@ function SignUpPage() {
         email: user.email,
         role: "team member", // Default role
       });
-
+      
       alert(`Welcome, ${user.displayName}!`);
     } catch (error) {
       alert("Google Sign-In Failed: " + error.message);
@@ -74,6 +74,7 @@ function SignUpPage() {
 
   return (
     <>{console.log("signup is rendering...")};
+    <div className="main-display">
     <div className="signupContainer">
     <div className="parent">
       <div className="left">
@@ -115,6 +116,7 @@ function SignUpPage() {
         <p>{isLogin ? "Register with your personal details to use all site features" : "Enter your details to use all site features"}</p>
         <button onClick={() => setIsLogin(!isLogin)}>{isLogin ? "Sign Up" : "Sign In"}</button>
       </div>
+    </div>
     </div>
     </div>
     </>
