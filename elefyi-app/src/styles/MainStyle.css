@@ -38,7 +38,7 @@
     align-items: center;
   }
   
-  .sidebar-nav a, .sidebar-footer a {
+  .sidebar-nav a, .sidebar-footer button {
     padding: 5px;
     margin: 5px;
     height: 45px;
@@ -54,9 +54,10 @@
     border-radius:10px;
     transition: background-color 0.3s ease;
     text-align: center;
+    border: none;
   }
   
-  .sidebar-nav a i ,.sidebar-footer a i{
+  .sidebar-nav a i ,.sidebar-footer button i{
     margin-right: 8px;
     width: 15px;
     height: 15px;
@@ -92,7 +93,7 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   } */
   
-  .sidebar-footer a:hover {
+  .sidebar-footer button:hover {
     background-color: #d32f2f;
     color: white;
   }

@@ -1,11 +1,23 @@
 import "../styles/MainStyle.css";
+import HeroVisitorPage from "../components/HeroVisitorPage";
+import Features from "../components/FeaturesVisitorPage";
+import TopSection from "../components/TopSectionVisitor";
+import ReviewsSection from "../components/ReviewsSection";
+import StepsSection from "../components/StepsSection";
+import CtaSection from "../components/ctaSectionVisitor";
+import Footer from "../components/footer";
 
 function VisitorPage() {
   return (
-    <div className="pageContainer">
-      <h1>Visitor Page</h1>
-      <p>Welcome to our platform. Explore as a visitor.</p>
-    </div>
+    <>
+    <TopSection/>
+    <HeroVisitorPage/>
+    <Features/>
+    <ReviewsSection/>
+    <StepsSection/>
+    <CtaSection/>
+    <Footer/>
+    </>
   );
 }
 

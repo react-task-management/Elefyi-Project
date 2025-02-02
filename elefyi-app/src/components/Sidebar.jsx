@@ -1,16 +1,28 @@
-
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom"; // Import useNavigate for redirecting
+import { signOut } from 'https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js'; // Import Firebase signOut method
+import { auth } from "../firebase"; // Import your Firebase auth
 import "../styles/MainStyle.css"; // Import your custom CSS file
 import logo from "../Images/logo.png";
 
-
 function Sidebar() {
+  const navigate = useNavigate(); // Hook to redirect after logout
+
+  // Logout handler
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Sign out the user
+      navigate("/signup"); // Redirect to the login page after logout
+    } catch (error) {
+      console.error("Error signing out: ", error.message);
+    }
+  };
+
   return (
     <aside className="sidebar">
       {/* Logo Section */}
       <div className="sidebar-logo">
         <img src={logo} alt="Logo" />
-        <NavLink to="/" className="logo-text">
+        <NavLink to="/home" className="logo-text">
           Elefyi
         </NavLink>
       </div>
@@ -18,7 +30,7 @@ function Sidebar() {
       {/* Navigation Links */}
       <nav className="sidebar-nav">
         <NavLink
-          to="/"
+          to="/home"
           className={({ isActive }) => (isActive ? "active" : "")}
         >
           <i className="bx bx-home bx-xs"></i>
@@ -49,10 +61,10 @@ function Sidebar() {
 
       {/* Logout Button */}
       <div className="sidebar-footer">
-        <NavLink to="/login">
+        <button onClick={handleLogout} className="logout-button">
           <i className="bx bx-log-out bx-xs"></i>
           Logout
-        </NavLink>
+        </button>
       </div>
     </aside>
   );
