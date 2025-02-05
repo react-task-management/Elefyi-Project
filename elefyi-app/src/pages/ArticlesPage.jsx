@@ -20,7 +20,7 @@ const ArticlesPage = () => {
   return (
     <div className="pageContainer">
 
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen mt-20">
       <header className="bg-[#05b0d6] text-white rounded-[20px] py-8">
         <div className="max-w-6xl mx-auto px-4">
           <h1 className="text-4xl font-bold">The Marketer's Last Mile</h1>

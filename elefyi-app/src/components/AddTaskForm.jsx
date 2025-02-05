@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types"; // ✅ Import PropTypes
 import { addTask, listenToUsers } from "../firebase";
+import userr from "../Images/user.png";
 
 function AddTaskForm({ userRole }) {
   // ✅ Accept logged-in user as prop
@@ -110,7 +111,7 @@ function AddTaskForm({ userRole }) {
         <h3 className="text-sm font-semibold mb-1">
           Assign Users: {isManager ? "" : "(Only managers can assign users)"}
         </h3>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2" id="add-user">
           {users.map((user) => (
             <label
               key={user.id}
@@ -120,13 +121,21 @@ function AddTaskForm({ userRole }) {
             >
               <input
                 type="checkbox"
+                style = {{width: "30px" ,
+                   padding: "0px", 
+                   margin: "0px 0px", 
+                   border: "2px solid #ccc", 
+                   borderRadius: "25px",
+                   fontSize: "16px",
+                   background: "#f0f0f0", 
+                   textAlign: "none"}}
                 value={user.id}
                 checked={taskData.assignedUsers.includes(user.id)}
                 onChange={() => handleUserSelection(user.id)}
                 disabled={!isManager} // ❌ Disable selection for non-managers
               />
               <img
-                src={user.profileImage || "/default-avatar.png"}
+                src={user.image || userr}
                 alt={user.firstName}
                 className="w-8 h-8 rounded-full border"
               />

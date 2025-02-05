@@ -29,30 +29,31 @@ function App() {
   return (
     <Router>
       {user ? (
-        <div className="app-layout">
+          <div className="min-h-screen flex">
           <Sidebar />
           <div className="main-content">
             <Navbar />
             <div>
+            <main className="flex-1 overflow-x-hidden overflow-y-auto">
               <Routes>
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/articles" element={<ArticlesPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/task-manage" element={<TaskManagePage />} />
                 <Route path="/user-profile" element={<UserProfilePage />} />
-                <Route path="/signup" element={<Navigate to="/home" />} />
-                <Route path="/login" element={<Navigate to="/home" />} />
                 <Route path="/task/:taskId" element={<TasksDetails />} />
               </Routes>
+            </main>
+            </div>
             </div>
           </div>
-        </div>
       ) : (
         <>
           <VisitorNav />
           <Routes>
             <Route path="/" element={<VisitorPage />} />
             <Route path="/about" element={<AboutUs />} />
+            <Route path="/article" element={<ArticlesPage/>}/>
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="*" element={<Navigate to="/" />} />

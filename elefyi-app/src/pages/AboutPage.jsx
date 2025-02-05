@@ -16,7 +16,7 @@ const AboutUs = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-          About Us
+          Who We Are
           </motion.h1>
           <motion.p 
             className="text-gray-600 mb-6"

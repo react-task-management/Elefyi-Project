@@ -80,7 +80,7 @@ const TaskDetails = () => {
           <span className="text-gray-700 font-medium">Back</span>
         </button>
 
-        <h1 className="text-2xl font-bold mb-4 text-center">{task.title}</h1>
+        <h2 className="text-3xl font-bold mb-4 text-center">{task.title}</h2>
 
         <div className="mb-4 flex items-center gap-2">
           <FaCalendarAlt className="text-blue-500" />
@@ -153,7 +153,7 @@ const TaskDetails = () => {
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
             ></textarea>
-            <button
+            <button id="blue-btn"
               className="px-4 py-2 bg-blue-500 text-white rounded-lg flex items-center hover:bg-blue-600"
               onClick={handleAddComment}
             >

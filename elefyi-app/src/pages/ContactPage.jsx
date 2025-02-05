@@ -1,11 +1,10 @@
-import "../styles/MainStyle.css";
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { auth } from "../firebase"; // تأكد من استيراد auth لمعرفة المستخدم الحالي
+import  { useState, useEffect } from 'react';
 import { Switch } from '@headlessui/react';
+import axios from 'axios';
+import { auth } from "../firebase";
 import Swal from 'sweetalert2';
 
-function ContactPage() {
+const ContactPage = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     LastName: '',
@@ -14,29 +13,25 @@ function ContactPage() {
     phoneNumber: '',
     message: ''
   });
-
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [userId, setUserId] = useState(null); // تخزين معرف المستخدم
+  const [userId, setUserId] = useState(null);
 
-  // ✅ 1. جلب بيانات المستخدم عند تحميل الصفحة
   useEffect(() => {
     const fetchUserData = async () => {
-      const user = auth.currentUser; // الحصول على المستخدم الحالي من Firebase Authentication
+      const user = auth.currentUser;
       if (user) {
-        setUserId(user.uid); // حفظ معرف المستخدم
-
+        setUserId(user.uid);
         try {
           const response = await axios.get(
             `https://react-project-f71d3-default-rtdb.firebaseio.com/users/${user.uid}.json`
           );
-          
           if (response.data) {
             setFormData({
               firstName: response.data.firstName || '',
               LastName: response.data.LastName || '',
               role: response.data.role || '',
-              email: response.data.email || user.email, // إذا لم تكن البيانات موجودة، استخدم البريد من auth
+              email: response.data.email || user.email,
               phoneNumber: response.data.phoneNumber || '',
               message: ''
             });
@@ -51,16 +46,13 @@ function ContactPage() {
         }
       }
     };
-
     fetchUserData();
   }, []);
 
-  // ✅ 2. تحديث القيم عند تغيير المدخلات
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // ✅ 3. إرسال البيانات إلى Firebase عند الضغط على زر "إرسال"
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!agreed) {
@@ -83,7 +75,6 @@ function ContactPage() {
         title: 'Success!',
         text: 'Message sent successfully!',
       });
-
       setFormData({ firstName: '', LastName: '', role: '', email: '', phoneNumber: '', message: '' });
     } catch (error) {
       Swal.fire({
@@ -98,64 +89,147 @@ function ContactPage() {
   };
 
   return (
-    <div className="pageContainer">
-      <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Contact US</h2>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div className="flex flex-col lg:flex-row">
+            {/* Left side - Contact Information */}
+            <div className="lg:w-1/3 bg-[#05b0d6] p-8 lg:p-12 text-white">
+              <h2 className="text-3xl font-bold mb-8">Get in Touch</h2>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Our Office</h3>
+                  <p className="text-sky-100">Orange Coding Academy</p>
+                  <p className="text-sky-100">Zarqa - Jordan</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Contact Info</h3>
+                  <p className="text-sky-100">Email: contact@Elefyi.com</p>
+                  <p className="text-sky-100">Phone: +962 799599201</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Business Hours</h3>
+                  <p className="text-sky-100">Monday - Friday: 9:00 AM - 5:00 PM</p>
+                  <p className="text-sky-100">Saturday - Sunday: Closed</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right side - Contact Form */}
+            <div className="lg:w-2/3 p-8 lg:p-12">
+              <h2 className="text-3xl font-bold mb-8 text-gray-900">Send us a Message</h2>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#05b0d6] focus:border-transparent"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                    <input
+                      type="text"
+                      name="LastName"
+                      value={formData.LastName}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#05b0d6] focus:border-transparent"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                  <input
+                    type="text"
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#05b0d6] focus:border-transparent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#05b0d6] focus:border-transparent"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                  <input
+                    type="text"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#05b0d6] focus:border-transparent"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                  <textarea
+                    name="message"
+                    rows={4}
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#05b0d6] focus:border-transparent"
+                    required
+                  />
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <Switch
+                    checked={agreed}
+                    onChange={setAgreed}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
+                      agreed ? "bg-[#05b0d6]" : "bg-gray-300"
+                    }`}
+                  >
+                    <span className="sr-only">Agree to policies</span>
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
+                        agreed ? "translate-x-6" : "translate-x-1"
+                      }`}
+                    />
+                  </Switch>
+                  <label className="text-sm text-gray-600">
+                    By selecting this, you agree to our{" "}
+                    <a href="#" className="font-semibold text-[#05b0d6] hover:text-[#048cab]">
+                      privacy policy
+                    </a>
+                    .
+                  </label>
+                </div>
+
+                <button
+                id='blue-btn'
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-[#05b0d6] text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#048cab] transition-colors duration-300 disabled:opacity-50"
+                >
+                  {loading ? "Submitting..." : "Send Message"}
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-        <form onSubmit={handleSubmit} className="mx-auto mt-16 max-w-xl sm:mt-20">
-          <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-            <div>
-              <label htmlFor="firstName" className="block text-sm font-semibold text-gray-900">First name</label>
-              <input id="firstName" name="firstName" type="text" value={formData.firstName} onChange={handleChange} className="block w-full rounded-md px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-indigo-600" required />
-            </div>
-            <div>
-              <label htmlFor="LastName" className="block text-sm font-semibold text-gray-900">Last name</label>
-              <input id="LastName" name="LastName" type="text" value={formData.LastName} onChange={handleChange} className="block w-full rounded-md px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-indigo-600" required />
-            </div>
-            <div className="sm:col-span-2">
-              <label htmlFor="role" className="block text-sm font-semibold text-gray-900">Role</label>
-              <input id="role" name="role" type="text" value={formData.role} onChange={handleChange} className="block w-full rounded-md px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-indigo-600" />
-            </div>
-            <div className="sm:col-span-2">
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-900">Email</label>
-              <input id="email" name="email" type="email" value={formData.email} onChange={handleChange} className="block w-full rounded-md px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-indigo-600" required />
-            </div>
-            <div className="sm:col-span-2">
-              <label htmlFor="phoneNumber" className="block text-sm font-semibold text-gray-900">Phone number</label>
-              <input id="phoneNumber" name="phoneNumber" type="text" value={formData.phoneNumber} onChange={handleChange} className="block w-full rounded-md px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-indigo-600" required />
-            </div>
-            <div className="sm:col-span-2">
-              <label htmlFor="message" className="block text-sm font-semibold text-gray-900">Message</label>
-              <textarea id="message" name="message" rows={4} value={formData.message} onChange={handleChange} className="block w-full rounded-md px-3.5 py-2 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-indigo-600" required />
-            </div>
-          </div>
-          <div className="flex items-center gap-4 mt-6">
-            <Switch
-              checked={agreed}
-              onChange={setAgreed}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full 
-              ${agreed ? "bg-indigo-600" : "bg-gray-300"} transition-colors duration-300`}
-            >
-              <span className="sr-only">Agree to policies</span>
-              <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition 
-              ${agreed ? "translate-x-6" : "translate-x-1"}`} />
-            </Switch>
-
-            <label className="text-sm text-gray-600">
-              By selecting this, you agree to our <a href="#" className="font-semibold text-indigo-600">privacy policy</a>.
-            </label>
-          </div>
-
-          <div className="mt-10">
-            <button type="submit" disabled={loading} id="blue-btn" className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500">
-              {loading ? "Submitting..." : "Let's talk"}
-            </button>
-          </div>
-        </form>
       </div>
     </div>
   );
-}
+};
 
 export default ContactPage;

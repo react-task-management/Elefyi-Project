@@ -31,6 +31,14 @@ const VisitorNav = () => {
       About
     </Link>
   </li>
+   <li>
+    <Link
+      to="/article"
+      className="text-gray-800 font-medium hover:text-blue-600 transition duration-300"
+    >
+      Artical
+    </Link>
+  </li>
   {/* Register Button */}
   <li>
     <Link

@@ -4,7 +4,7 @@ import {
     UsersIcon, // Real-Time Collaboration
   } from '@heroicons/react/24/solid';
 
-  import Image from '../Images/image.png'
+  import Image from '../Images/visitor2.png'
 
 export default function Features() {
   return (

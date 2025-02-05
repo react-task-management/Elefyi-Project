@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import Image from '../Images/image.png';
+import Image from '../Images/visitor1.png';
 import userImage from '../Images/user.png';
 
   
@@ -54,7 +54,7 @@ import userImage from '../Images/user.png';
                 </div>
 
                 <div className="xl:col-span-3">
-                    <img className="w-full mx-auto scale-90" src={Image} alt="" />
+                    <img className="w-full mx-auto scale-100 ml-10 rounded-[20px]" src={Image} alt="" />
                 </div>
             </div>
         </div>

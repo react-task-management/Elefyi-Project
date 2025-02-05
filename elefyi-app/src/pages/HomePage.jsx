@@ -9,8 +9,8 @@ function HomePage () {
     return (<>
         <div className="pageContainer2">
             <HomeHero/>
-            <HomeTasks/>
-            <HomeArticles/>
+            {/* <HomeTasks/>
+            <HomeArticles/> */}
         </div>
       </> );
 }

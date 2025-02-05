@@ -1,32 +1,27 @@
-
-
 .signupContainer {
-  height: 100vh !important;
-  background: #f4f4f4;
-  font-family: "Poppins", sans-serif;
+  min-height: 117vh;
   background: linear-gradient(135deg, #ffffff, #04b0d6);
   display: flex;
   justify-content: center;
   align-items: center;
-  scroll-behavior: unset;
-  margin-top: -25px;
-  height: auto;
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
 }
-
+h2{
+  margin-bottom: 10px;
+}
 .parent {
   display: flex;
-  width: 850px;
-  height: auto;
-  margin-top: 100px;
-  margin-bottom: 100px;
+  flex-wrap: wrap;
+  width: 90%;
+  max-width: 850px;
   background: white;
   border-radius: 20px;
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
 
-.left,
-.right {
+.left, .right {
   width: 50%;
   padding: 50px;
   text-align: center;
@@ -41,15 +36,78 @@
   color: white;
 }
 
-.left h2 {
-  font-size: 26px;
-  margin-bottom: 10px;
+.right {
+  background: white;
+  color: #028aa5;
 }
 
-.left p {
-  font-size: 14px;
+.icons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
   margin-bottom: 20px;
 }
+
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+  .parent {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .parent {
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .left, .right {
+    width: 100%;
+    padding: 30px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .parent {
+    max-width: 400px;
+  }
+
+  .left, .right {
+    padding: 25px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .parent {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .left, .right {
+    padding: 20px;
+  }
+
+  .left h2, .right h2 {
+    font-size: 22px;
+  }
+
+  .left p, .right p {
+    font-size: 12px;
+  }
+
+  form input:not([type="radio"]) {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .check-user {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
 
 .left button {
   background: transparent;

@@ -2,11 +2,13 @@
 import { useState } from "react";
 import { auth, database } from "../firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-import { ref, set } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+import { ref, set,get } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
 import { useNavigate } from "react-router-dom";
 
 import "../styles/SignUpPage.css";
 import { FcGoogle } from "react-icons/fc";
+
+
 
 function SignUpPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -18,25 +20,39 @@ function SignUpPage() {
   const navigate = useNavigate();
 
   // 🔹 Handle Sign Up
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+  // Password regex: At least 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-      // Store user details in Firebase Realtime Database
-      await set(ref(database, `users/${user.uid}`), {
-        firstName: firstname,
-        LastName: lastname,
-        email: user.email,
-        role: userType,
-      });
+// 🔹 Handle Sign Up
+const handleSignUp = async (e) => {
+  e.preventDefault();
 
-      alert("Registration Successful!");
-    } catch (error) {
-      alert("Error: " + error.message);
-    }
-  };
+  // Check if password meets security requirements
+  if (!passwordRegex.test(password)) {
+    alert("Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.");
+    return; // Stop function if password is invalid
+  }
+
+  else {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Store user details in Firebase Realtime Database
+    await set(ref(database, `users/${user.uid}`), {
+      firstName: firstname,
+      LastName: lastname,
+      email: user.email,
+      role: userType,
+    });
+
+    alert("Registration Successful!");
+  } catch (error) {
+    alert("Error: " + error.message);
+  }
+}
+};
+
 
   // 🔹 Handle Sign In
   const handleSignIn = async (e) => {
@@ -51,26 +67,36 @@ function SignUpPage() {
   };
 
   // 🔹 Handle Google Sign In
-  const handleGoogleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
+  
+const handleGoogleSignIn = async () => {
+  const provider = new GoogleAuthProvider();
 
-      // Check if user already exists in the database
-      const userRef = ref(database, `users/${user.uid}`);
-      set(userRef, {
-        firstName: user.displayName,
-        LastName: user.displayName,
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    // Reference to the user in the database
+    const userRef = ref(database, `users/${user.uid}`);
+
+    // Check if user already exists
+    const snapshot = await get(userRef);
+    if (!snapshot.exists()) {
+      // If user doesn't exist, add to the database
+      await set(userRef, {
+        firstName: user.displayName.split(" ")[0],
+        LastName: user.displayName.split(" ")[1] || "",
         email: user.email,
         role: "team member", // Default role
       });
-      
-      alert(`Welcome, ${user.displayName}!`);
-    } catch (error) {
-      alert("Google Sign-In Failed: " + error.message);
     }
-  };
+
+    alert(`Welcome, ${user.displayName}!`);
+    navigate("/home"); // Redirect after successful login
+  } catch (error) {
+    console.error("Google Sign-In Error: ", error.message);
+    alert("Google Sign-In Failed: " + error.message);
+  }
+};
 
   return (
     <>{console.log("signup is rendering...")};

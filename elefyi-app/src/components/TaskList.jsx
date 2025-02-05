@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import userr from "../Images/user.png";
 import { motion, AnimatePresence } from "framer-motion"; // ✅ Import Framer Motion
 import { FaCheck } from "react-icons/fa";
 import {
@@ -61,7 +62,7 @@ function TaskList({ tasks, setTasks }) {
                 className={`p-5 rounded-lg shadow-md transition-transform transform hover:scale-105 flex flex-col justify-between relative
                   ${
                     task.status === "Done"
-                      ? "bg-green-100 border-l-4 border-blue-500" // ✅ Green background if "Done"
+                      ? "bg-green-100 border-l-4 border-green-500" // ✅ Green background if "Done"
                       : task.priority === "High"
                       ? "border-l-4 border-red-500" 
                       : task.priority === "Medium"
@@ -102,7 +103,7 @@ function TaskList({ tasks, setTasks }) {
                       return user ? (
                         <img
                           key={userId}
-                          src={user.profileImage || "/default-avatar.png"}
+                          src={user.image || userr}
                           alt={user.firstName}
                           className="w-8 h-8 rounded-full border-2 border-white -ml-2"
                         />
